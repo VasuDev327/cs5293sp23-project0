@@ -1,7 +1,7 @@
 import PyPDF2
+import requests
 
 import argparse
-import requests
 import io
 import re
 import sqlite3
