@@ -1,9 +1,8 @@
+import PyPDF2
+
 import argparse
 import requests
 import io
-import PyPDF2
-from PyPDF2 import PdfReader
-import pandas as pd
 import re
 import sqlite3
 
@@ -106,6 +105,9 @@ def extractincidents(pdf_reader):
         
     # Insert data
         populatedb(db, date_time, incident, address, nature, incident_ori)
+    
+    # Insert file log
+    
     # Incidents Count
     incidentcounts(db) 
 
@@ -115,6 +117,8 @@ def extractincidents(pdf_reader):
 def createdb():
     conn = sqlite3.connect('project0.db')    # creation of database and connecting to it
     cursor = conn.cursor()                  # creation of cursor object
+
+    # Generating the inc_data table
     cursor.execute('''
                     CREATE TABLE IF NOT EXISTS norman_inc_data 
                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -125,6 +129,15 @@ def createdb():
                     incident_ORI)
                 ''')
     conn.commit()
+
+    # Generating the file log table
+    # cursor.execute('''
+    #                 create table if not EXISTS file_log
+    #                 (file_name TEXT PRIMARY KEY,
+    #                 datetime TEXT)
+    #             ''')
+    # conn.commit()
+
     conn.close()
     return('project0.db')
 
@@ -144,6 +157,24 @@ def populatedb(db, date_time, incident, address, nature, incident_ori):
 
     conn.commit()
     conn.close()
+
+# def insertfilelog(db, date_time, file_name):
+#     conn = sqlite3.connect(db)    # creation of database and connecting to it
+#     cursor = conn.cursor()                  # creation of cursor object
+#     insert_query = '''
+#                     INSERT INTO file_log 
+#                     (file_name, 
+#                     datetime)
+#                     VALUES (?, ?)
+#                 '''
+    
+#     try:
+#         cursor.execute(insert_query, (file_name, date_time))
+#         conn.commit()
+#     except Exception as e:
+#         print(f"Exception while inserting file log for {file_name}", e)
+
+#     conn.close()
 
 # Print incident counts
 def incidentcounts(db):
@@ -174,15 +205,12 @@ def status(db):
     conn.close()
 
 
-# if __name__ == '__main__':
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument("--incidents", type=str, required=True, 
-#                          help="Incident summary url.")
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--incidents", type=str, required=True, 
+                         help="Incident summary url.")
      
-#     args = parser.parse_args()
-#     if args.incidents:
-#         main(args.incidents)
-url = "https://www.normanok.gov/sites/default/files/documents/2023-01/2023-01-01_daily_incident_summary.pdf"
-read_pdf = main(url)
-extractincidents(read_pdf)
-# incidentcounts()
+    args = parser.parse_args()
+    if args.incidents:
+       read_pdf = main(args.incidents)
+       extractincidents(read_pdf)
