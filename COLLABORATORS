@@ -2,4 +2,4 @@ requests Documentation | https://docs.python-requests.org/en/v2.0.0/ | This webs
 pyPDF2 Documentation | https://pypi.org/project/PyPDF2/ | This website helped me to understand how to read the data from the pdf, which is extracted upon requests
 regex commands Documentation | https://www.regular-expressions.info/quickstart.html | Along with the lectures, I used this website to understand more about the regular expressions to get the basic patterns
 SQLite3 Interface | https://docs.python.org/3/library/sqlite3.html | Along with lecture videos, I used this website as a reference
-I did used stackoverflow, where I understood the logic but I have not used that code, instead I may have followed different analysis for my code.
+I did used stackoverflow, where I understood the logic but I have not used that code, instead I have followed their approach, to implement my logic.
