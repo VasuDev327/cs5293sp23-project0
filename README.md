@@ -54,7 +54,7 @@ Within the extractincidents(pdf_reader) function, there are two additional funct
 ### Sample Output:
 ![image](https://user-images.githubusercontent.com/102677891/223553397-7cc565b0-9195-4e9b-b00e-97b22002c71f.png)
 
-### Note:
+### Assumptions:
 In this code I have considered the hardcoded information of the Incident_ORI as shown below:
 ```python
 Incident_ORI = ['OK0140200',
